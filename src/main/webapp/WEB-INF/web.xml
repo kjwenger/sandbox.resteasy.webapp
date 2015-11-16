@@ -1,0 +1,81 @@
+<web-app id="WebApp_ID" version="2.5"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	                    http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd">
+	<display-name>Restful Web Application</display-name>
+
+	<listener>
+		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener
+		</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>log4jServletFilter</filter-name>
+		<filter-class>org.apache.logging.log4j.web.Log4jServletFilter
+		</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>log4jServletFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+
+	<context-param>
+		<param-name>resteasy.media.type.mappings</param-name>
+		<param-value>
+			html : text/html, json : application/json, xml : application/xml
+		</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>resteasy.media.type.param.mapping</param-name>
+		<param-value>contentType</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>resteasy.language.mappings</param-name>
+		<param-value>
+			en : en-US, es : es, fr : fr
+		</param-value>
+	</context-param>
+
+	<!-- Auto scan REST service -->
+	<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>resteasy.resources</param-name>
+		<param-value>com.u14n.sandbox.jaxrs.LocationsResource</param-value>
+	</context-param>
+
+	<!-- this need same with resteasy servlet url-pattern -->
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/restapi</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
+		</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<servlet-class>
+			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<url-pattern>/restapi/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>
