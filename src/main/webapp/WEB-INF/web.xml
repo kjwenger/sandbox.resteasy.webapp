@@ -24,6 +24,7 @@
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 
+	<!-- https://docs.jboss.org/resteasy/docs/3.0.6.Final/userguide/html/JAX-RS_Content_Negotiation.html -->
 	<context-param>
 		<param-name>resteasy.media.type.mappings</param-name>
 		<param-value>
